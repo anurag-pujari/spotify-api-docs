@@ -1,0 +1,9 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spotify Web API",
+    "version": "1.0.3",
+    "description": "Sample OpenAPI for Spotify Web API."
+  },
+  "paths": {}
+}
