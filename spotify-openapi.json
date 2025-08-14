@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Spotify Web API",
-    "description": "Spotify Web API lets you fetch music data, manage playlists, search tracks, and control playback.\nThis OpenAPI spec includes token-based authentication (OAuth 2.0), playlist retrieval, track search, and authorization URL details.\n\n## How to get Client ID and Client Secret\n\n1. Visit the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)\n2. Log in with your Spotify account\n3. Select **Create an App**\n4. Fill in the details, such as App name, description, and others.\n5. Once created, you can see see your **Client ID** and an option to **View Client Secret**\n6. You can set your Redirect URI which is required for Authorization Code Flow.\n7. Now, use these credentials to obtain an **OAuth token**\n\n## Authorization code flow steps\n\n- **Authorization URL**: `https://accounts.spotify.com/authorize`\n- **Token URL**: `https://accounts.spotify.com/api/token`\n- Required scopes vary based on the endpoint, such as `playlist-read-private` or `user-library-read`.\n\n\n## Example: Get access token using cURL\n\nOnce you have obtained the authorization code via redirect, you can exchange it for an access token using the following `curl` command:\n\n```bash\ncurl -X POST https://accounts.spotify.com/api/token \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=authorization_code\" \\\n  -d \"code=YOUR_AUTHORIZATION_CODE\" \\\n  -d \"redirect_uri=YOUR_REGISTERED_REDIRECT_URI\" \\\n  -u YOUR_CLIENT_ID:YOUR_CLIENT_SECRET\n```\n\n- Replace `YOUR_AUTHORIZATION_CODE` with the code you got after user consent.\n- Replace `YOUR_REGISTERED_REDIRECT_URI` with the same redirect URI you used during authorization.\n- Use `-u` to pass `client_id` and `client_secret` in basic auth format.\n\nThe response will include:\n\n```json\n{\n  \"access_token\": \"...\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"...\",\n  \"scope\": \"playlist-read-private\"\n}\n",
+    "description": "Spotify Web API lets you fetch music data, manage playlists, search tracks, and control playback.\nThis OpenAPI spec includes token-based authentication (OAuth 2.0), playlist retrieval, track search, and authorization URL details.\n\n## How to get Client ID and Client Secret\n\n1. Visit the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)\n2. Log in with your Spotify account\n3. Select **Create an App**\n4. Fill in the details, such as App name, description, and others.\n5. Once created, you can see your **Client ID** and an option to **View Client Secret**\n6. Set your Redirect URI which is required for Authorization Code Flow.\n7. Use these credentials to obtain an **OAuth token**\n\n## Authorization code flow steps\n\n- **Authorization URL**: `https://accounts.spotify.com/authorize`\n- **Token URL**: `https://accounts.spotify.com/api/token`\n- Required scopes vary based on the endpoint, such as `playlist-read-private` or `user-library-read`.\n\n## Example: Get access token using cURL\n\nOnce you have obtained the authorization code via redirect, you can exchange it for an access token using the following `curl` command:\n\n```bash\ncurl -X POST https://accounts.spotify.com/api/token \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=authorization_code\" \\\n  -d \"code=YOUR_AUTHORIZATION_CODE\" \\\n  -d \"redirect_uri=YOUR_REGISTERED_REDIRECT_URI\" \\\n  -u YOUR_CLIENT_ID:YOUR_CLIENT_SECRET\n```\n\n- Replace `YOUR_AUTHORIZATION_CODE` with the code you got after user consent.\n- Replace `YOUR_REGISTERED_REDIRECT_URI` with the same redirect URI you used during authorization.\n- Use `-u` to pass `client_id` and `client_secret` in basic auth format.\n\nThe response will include:\n\n```json\n{\n  \"access_token\": \"...\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 3600,\n  \"refresh_token\": \"...\",\n  \"scope\": \"playlist-read-private\"\n}\n",
     "contact": {
       "name": "Spotify Developer Support",
       "url": "https://developer.spotify.com",
@@ -45,9 +45,7 @@
   "paths": {
     "/me/playlists": {
       "get": {
-        "tags": [
-          "Playlists"
-        ],
+        "tags": ["Playlists"],
         "summary": "Get current user's playlists",
         "description": "Returns a list of the current user's playlists.",
         "parameters": [
@@ -56,20 +54,14 @@
             "in": "query",
             "description": "Maximum number of playlists to return (default 20)",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 20
-            }
+            "schema": { "type": "integer", "default": 20 }
           },
           {
             "name": "offset",
             "in": "query",
             "description": "The index of the first playlist to return",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 0
-            }
+            "schema": { "type": "integer", "default": 0 }
           }
         ],
         "responses": {
@@ -77,18 +69,14 @@
             "description": "A list of playlists",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/inline_response_200"
-                },
+                "schema": { "$ref": "#/components/schemas/inline_response_200" },
                 "example": {
                   "items": [
                     {
                       "name": "Coding Vibes",
                       "id": "37i9dQZF1DXdPec7aLTmlC",
                       "public": true,
-                      "tracks": {
-                        "total": 25
-                      }
+                      "tracks": { "total": 25 }
                     }
                   ]
                 }
@@ -97,19 +85,13 @@
           }
         },
         "security": [
-          {
-            "OAuth2": [
-              "playlist-read-private"
-            ]
-          }
+          { "OAuth2": ["playlist-read-private"] }
         ]
       }
     },
     "/search": {
       "get": {
-        "tags": [
-          "Search"
-        ],
+        "tags": ["Search"],
         "summary": "Search for a track",
         "description": "Search Spotify content (track, album, artist)",
         "parameters": [
@@ -118,9 +100,7 @@
             "in": "query",
             "description": "The search query keyword (e.g., song name)",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "schema": { "type": "string" }
           },
           {
             "name": "type",
@@ -129,24 +109,14 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "album",
-                "artist",
-                "playlist",
-                "track",
-                "show",
-                "episode"
-              ]
+              "enum": ["album", "artist", "playlist", "track", "show", "episode"]
             }
           },
           {
             "name": "limit",
             "in": "query",
             "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
+            "schema": { "type": "integer", "default": 10 }
           }
         ],
         "responses": {
@@ -154,20 +124,14 @@
             "description": "Search results for tracks",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/inline_response_200_1"
-                },
+                "schema": { "$ref": "#/components/schemas/inline_response_200_1" },
                 "example": {
                   "tracks": {
                     "items": [
                       {
                         "name": "Shape of You",
                         "id": "7qiZfU4dY1lWllzX7mPBI3",
-                        "artists": [
-                          {
-                            "name": "Ed Sheeran"
-                          }
-                        ]
+                        "artists": [{ "name": "Ed Sheeran" }]
                       }
                     ]
                   }
@@ -177,11 +141,7 @@
           }
         },
         "security": [
-          {
-            "OAuth2": [
-              "user-library-read"
-            ]
-          }
+          { "OAuth2": ["user-library-read"] }
         ]
       }
     },
@@ -189,7 +149,7 @@
       "post": {
         "tags": ["Authorization"],
         "summary": "Exchange authorization code for access token",
-        "description": "Use this endpoint to exchange the authorization code obtained via the Spotify OAuth Authorization URL for an access token and refresh token.",
+        "description": "Use this endpoint to exchange the authorization code obtained via the Spotify OAuth Authorization URL for an access token and refresh token.\n\n**Note:** Include your `client_id` and `client_secret` as HTTP Basic Auth credentials (Base64 encoded) or pass them via the `-u` flag in `curl`.\n\n**Example request:**\n```bash\ncurl -X POST https://accounts.spotify.com/api/token \\\n  -H \"Content-Type: application/x-www-form-urlencoded\" \\\n  -d \"grant_type=authorization_code\" \\\n  -d \"code=YOUR_AUTHORIZATION_CODE\" \\\n  -d \"redirect_uri=YOUR_REGISTERED_REDIRECT_URI\" \\\n  -u YOUR_CLIENT_ID:YOUR_CLIENT_SECRET\n```",
         "requestBody": {
           "required": true,
           "content": {
@@ -206,6 +166,7 @@
             }
           }
         },
+        "security": [{ "OAuth2": [] }],
         "responses": {
           "200": {
             "description": "Access token returned successfully",
@@ -220,6 +181,13 @@
                     "refresh_token": { "type": "string", "example": "AQD3..." },
                     "scope": { "type": "string", "example": "playlist-read-private" }
                   }
+                },
+                "example": {
+                  "access_token": "BQDgYy8X...",
+                  "token_type": "Bearer",
+                  "expires_in": 3600,
+                  "refresh_token": "AQBe9pY3...",
+                  "scope": "playlist-read-private user-read-private"
                 }
               }
             }
@@ -251,15 +219,30 @@
       },
       "inline_response_200": {
         "type": "object",
-        "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/Playlist" } } }
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Playlist" } }
+        }
       },
       "inline_response_200_1": {
         "type": "object",
-        "properties": { "tracks": { "$ref": "#/components/schemas/inline_response_200_1_tracks" } }
+        "properties": {
+          "tracks": { "$ref": "#/components/schemas/inline_response_200_1_tracks" }
+        }
       },
-      "Playlist_tracks": { "type": "object", "properties": { "total": { "type": "integer", "example": 12 } } },
-      "Track_artists": { "type": "object", "properties": { "name": { "type": "string", "example": "Ed Sheeran" } } },
-      "inline_response_200_1_tracks": { "type": "object", "properties": { "items": { "type": "array", "items": { "$ref": "#/components/schemas/Track" } } } }
+      "Playlist_tracks": {
+        "type": "object",
+        "properties": { "total": { "type": "integer", "example": 12 } }
+      },
+      "Track_artists": {
+        "type": "object",
+        "properties": { "name": { "type": "string", "example": "Ed Sheeran" } }
+      },
+      "inline_response_200_1_tracks": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Track" } }
+        }
+      }
     },
     "securitySchemes": {
       "OAuth2": {
